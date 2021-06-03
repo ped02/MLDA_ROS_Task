@@ -18,7 +18,7 @@
       - [Graph For Map Painter](#graph-for-map-painter)
 
 ## Introduction
-This is an attempt to implement the Rapidly-exploring Random Tree (RRT) algorithm developed by Lavalle et al, a versitile path planning algorithm applicable to high dimensional space. The implementation also includes the RRT* which is another flavor of the RRT. This is a ROS2 implementation, developed and tested on Ubuntu 20.04 running ROS 2 Foxy. The attempt at the task contains
+This is an attempt to implement the Rapidly-exploring Random Tree (RRT) algorithm developed by Lavalle et al, a versitile path planning algorithm applicable to high dimensional space. The implementation also includes the RRT* which is another flavor of the RRT. This is a ROS2 implementation, developed and tested on Ubuntu 20.04 running ROS 2 Foxy. 
 <br/>
 
 ### RRT
@@ -29,6 +29,10 @@ This is an attempt to implement the Rapidly-exploring Random Tree (RRT) algorith
 
 
 Note: The speed of GIF shown above may vary.
+
+
+Some personal comment on the project: At first I was trying to write the project in C++ as it was the preferred choice (stated in the task document). But also I was looking for an opportunity to practice C++. Although, after spending some time trying to both practice C++ and ROS 2 (learning best practices and coding convention too) as well as write quite complex algorithm, I think that I need to use a more familiar language, Python, in order at least have something deliverable in time. As I am aware of the Python performance weakness (which is critical in robotics applications), I tried to reduce native python loops and heavily utilize NumPy to improve the program's performance. But this makes the code a lot harder to read. The coding style of the project was also not very well maintained, I have been using camel-casing primarily, but the [ROS styling guide](http://wiki.ros.org/CppStyleGuide) adviced use of under_score so during the period where I used C++, the styling has been pretty consistent with the ROS styling guide, but as I revert back to Python, which is the time I need to speed up my working, I have to fall back to camel-casing to help my work performance. But if there were more time, I would go back to refactor the code to the same style.
+
 
 ## Getting Started
 Firstly, you need to install ROS 2 Foxy Desktop. You can follow [this](https://docs.ros.org/en/foxy/Installation.html) instruction. Make sure you insall the Desktop as we need rviz.
