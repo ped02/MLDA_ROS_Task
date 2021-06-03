@@ -104,10 +104,12 @@ Example:
 ```
 ros2 topic pub -1 /start_plan cpp_rrt_1/msg/StartPlan "{step_size: 20}"
 ```
-The example will run vanilla RRT with step size of 20 pixels, maximum node of 10000, strict steering and no work-in-progress visualization. The parameters will be explained in another section below.
+The example will run vanilla RRT with step size of `20` pixels, maximum node of `10000`, strict steering and no work-in-progress visualization. The parameters will be explained in another section below.
 
 ## Search Parameters
 To start the search, you need to publish the search parameters to `/start_plan` topic as `cpp_rrt_1/msg/StartPlan` message type. The message type will be explained below.
+
+Note: To run RRT*, set `neighbour_radius` to positive number. Else it is going to run RRT.
 
 #### Parameters
 Name | Type | Defaul Value | Description
@@ -116,11 +118,45 @@ Name | Type | Defaul Value | Description
 `max_node_limit` | `int64` | `10000` | Number of nodes to insert before stopping the search. 
 `max_iteration_limit` | `int64` | `1000000` | Number of iteration before stopping the search. As a fail safe if no nodes can be inserted (no more space). Usually signifies that the tree is trapped. If you increase `max_node_limit` make sure to increase `max_iteration_limit` too.
 `goal_bias` | `float64` | `0.05` | Bias to sample goal as random configuration. Recommended in literature: `0.05 - 0.10` or `5% - 10%`.
-`neighbour_radius` | `float64` | `0.0` | Neighbour search radius for RRT*. Radius of `0` essentially is RRT.
+`neighbour_radius` | `float64` | `0.0` | Neighbour search radius for RRT*. Radius of `0` essentially is RRT. For RRT*, we recommend 2 to 3 times of `step_size`.
 `strict` | `bool` | `true` | Strict steering. If `true` the tree can only grow if the growth path 1. hits the max step size, 2. hits the goal node, 3. hits the sampled point. If `false` the growth path will also include points at collision if the collision is less than max step size.
-`stop_on_found` | `bool` | `true` | To run RRT* and see improvement, this needs to be `false`
+`stop_on_found` | `bool` | `true` | `true` tells the node to stop when a path is found. To run RRT* and see improvement, this needs to be `false`
 `visualize_frequency` | `int64` | `0` | To turn on visualization (publish visualization to view in rviz) set this to positive integer. Tells the node to publish the visualization every `visualization_frequency` iteration. Recommended value: `50`
 `path` | `bool` | `true` | `true` for path highlighting in visualization (highlight in dark blue)
 `reach` | `bool` | `false` | `true` for highlighting the nodes that reach the sampled point (highlight in purple)
-`sample` | `bool` | `false` | `true` for highlithing the latest sampled point in yellow
+`sample` | `bool` | `false` | `true` for highlihting the latest sampled point in yellow
 
+#### Visualization Key
+Color | Description
+------|------------
+Green | Start Node
+Red | Goal Node
+Light Blue | General Nodes and Edges
+Dark Blue | Path Nodes and Edges
+Purple | Nodes At Sampled Point
+Yellow | Latest Sampled Point
+
+## Map Painter
+To open the map painter run: `ros2 run py_rrt_1 map_painter`.
+This is a GUI to drawing/editing map. You can use your mouse to draw on the canvas using left mouse button.
+
+#### List of keyboard controls
+Key | Description
+----|-------------
+`d` | Draw Tool / Brush Tool
+`e` | Eraser Tool
+`y` | Increase brush size
+`h` | Decrease brush size
+`f` | Set Start Point Tool
+`g` | Set Goal Point Tool
+`o` | Open map from file
+`s` | Send map to `/map_image`
+`c` | Save map to disk
+
+The user can be in 4 modes, one for each tool. When user is in each tool, the mouse pointer will change depending on the tool.
+Tool/Mode | Appearance
+----------|------------
+Draw Tool | Write Circle
+Eraser Tool | Gray Circle
+Set Start Point Tool | Green Rectangle
+Set Goal Point Tool | Red Rectangle
