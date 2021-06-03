@@ -112,7 +112,7 @@ To start the search, you need to publish the search parameters to `/start_plan` 
 #### Parameters
 Name | Type | Defaul Value | Description
 -----|------|--------------|------------
-`step_size` | `int64` | No Default Value | Max step size of tree in pixels. Recommended value for 500x500 map: 20
+`step_size` | `int64` | No Default Value | Max step size of tree in pixels. Recommended value for 500x500 map: `20`
 `max_node_limit` | `int64` | `10000` | Number of nodes to insert before stopping the search. 
 `max_iteration_limit` | `int64` | `1000000` | Number of iteration before stopping the search. As a fail safe if no nodes can be inserted (no more space). Usually signifies that the tree is trapped. If you increase `max_node_limit` make sure to increase `max_iteration_limit` too.
 `goal_bias` | `float64` | `0.05` | Bias to sample goal as random configuration. Recommended in literature: `0.05 - 0.10` or `5% - 10%`.
