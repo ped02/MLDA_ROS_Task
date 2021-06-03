@@ -1,17 +1,16 @@
 # MLDA 2022 ROS Recruitment Task
 
 
-### Introduction
+## Introduction
 This is an attempt to implement the Rapidly-exploring Random Tree (RRT) algorithm developed by Lavalle et al, a versitile path planning algorithm applicable to high dimensional space. The implementation also includes the RRT* which is another flavor of the RRT. This is a ROS2 implementation, developed and tested on Ubuntu 20.04 running ROS 2 Foxy. The attempt at the task contains
 <br/>
-### Getting Started
+## Getting Started
 Firstly, you need to install ROS 2 Foxy Desktop. You can follow [this](https://docs.ros.org/en/foxy/Installation.html) instruction. Make sure you insall the Desktop as we need rviz.
 
 You also need install the Python dependencies.
 ```
 python3 -m pip install opencv-contrib-python numpy tk
 ```
-
 
 Next, create a directory for the ROS 2 workspace.
 Example: 
@@ -41,7 +40,7 @@ cd ~/mlda_ws
 concol build
 ```
 
-### Running nodes
+## Running nodes
 To run the nodes, you need to source the project 
 ```
 cd ~/mlda_ws
@@ -60,7 +59,7 @@ Node Name | Package | Description
 
 Note: There are also nodes used for internal testing which is not listed here.
 
-#### Run Nodes Sequences
+### Run Nodes Sequences
 
 1. Start Map Server Node: `ros2 run cpp_rrt_1 map_server_node`
 2. Start RRT Planner: `ros2 run py_rrt_1 rrt_planner`
@@ -72,15 +71,16 @@ Note: There are also nodes used for internal testing which is not listed here.
 
 After this, you have the option to use the `read_image_node` or `map_painter` to load the map into the system.
 
-##### Read Map From File
+##### 1. Read Map From File
 `ros2 run cpp_rrt_1 read_image_node <absolue path to map file>`
 
 Example:
 ```
 ros2 run cpp_rrt_1 read_image_node ~/Downloads/Maps/map1.png
 ```
+<br/>
 
-#### Read Map Using Map Painter
+#### 2. Read Map Using Map Painter
 `ros2 run py_rrt_1 map_painter`  
 This will open the map painter.  
 
@@ -90,7 +90,8 @@ This will load the file onto the map painter.
 Press `s` to send the map into the `map_server_node`  
 
 More information and advanced usage of the **map painter** can be found in another section below.  
-
+<br/>
+<br/>
 After loading the map into the system, you need to specify the start and goal points by publishing onto the `/start_point` and `/goal_point` topic as `geometry_msgs/msg/Point` message type.
 Example:
 ```
@@ -104,3 +105,22 @@ Example:
 ros2 topic pub -1 /start_plan cpp_rrt_1/msg/StartPlan "{step_size: 20}"
 ```
 The example will run vanilla RRT with step size of 20 pixels, maximum node of 10000, strict steering and no work-in-progress visualization. The parameters will be explained in another section below.
+
+## Search Parameters
+To start the search, you need to publish the search parameters to `/start_plan` topic as `cpp_rrt_1/msg/StartPlan` message type. The message type will be explained below.
+
+#### Parameters
+Name | Type | Defaul Value | Description
+-----|------|--------------|------------
+`step_size` | `int64` | No Default Value | Max step size of tree in pixels. Recommended value for 500x500 map: 20
+`max_node_limit` | `int64` | `10000` | Number of nodes to insert before stopping the search. 
+`max_iteration_limit` | `int64` | `1000000` | Number of iteration before stopping the search. As a fail safe if no nodes can be inserted (no more space). Usually signifies that the tree is trapped. If you increase `max_node_limit` make sure to increase `max_iteration_limit` too.
+`goal_bias` | `float64` | `0.05` | Bias to sample goal as random configuration. Recommended in literature: `0.05 - 0.10` or `5% - 10%`.
+`neighbour_radius` | `float64` | `0.0` | Neighbour search radius for RRT*. Radius of `0` essentially is RRT.
+`strict` | `bool` | `true` | Strict steering. If `true` the tree can only grow if the growth path 1. hits the max step size, 2. hits the goal node, 3. hits the sampled point. If `false` the growth path will also include points at collision if the collision is less than max step size.
+`stop_on_found` | `bool` | `true` | To run RRT* and see improvement, this needs to be `false`
+`visualize_frequency` | `int64` | `0` | To turn on visualization (publish visualization to view in rviz) set this to positive integer. Tells the node to publish the visualization every `visualization_frequency` iteration. Recommended value: `50`
+`path` | `bool` | `true` | `true` for path highlighting in visualization (highlight in dark blue)
+`reach` | `bool` | `false` | `true` for highlighting the nodes that reach the sampled point (highlight in purple)
+`sample` | `bool` | `false` | `true` for highlithing the latest sampled point in yellow
+
