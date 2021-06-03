@@ -4,6 +4,16 @@
 ## Introduction
 This is an attempt to implement the Rapidly-exploring Random Tree (RRT) algorithm developed by Lavalle et al, a versitile path planning algorithm applicable to high dimensional space. The implementation also includes the RRT* which is another flavor of the RRT. This is a ROS2 implementation, developed and tested on Ubuntu 20.04 running ROS 2 Foxy. The attempt at the task contains
 <br/>
+
+### RRT
+![RRT GIF](/imgs/rrt_1.gif)
+
+### RRT*
+![RRT* GIF](/imgs/rrt*_2.gif)
+
+
+Note: The speed of GIF shown above may vary.
+
 ## Getting Started
 Firstly, you need to install ROS 2 Foxy Desktop. You can follow [this](https://docs.ros.org/en/foxy/Installation.html) instruction. Make sure you insall the Desktop as we need rviz.
 
@@ -110,6 +120,18 @@ The example will run vanilla RRT with step size of `20` pixels, maximum node of 
 To start the search, you need to publish the search parameters to `/start_plan` topic as `cpp_rrt_1/msg/StartPlan` message type. The message type will be explained below.
 
 Note: To run RRT*, set `neighbour_radius` to positive number. Else it is going to run RRT.
+
+
+RRT Example:
+```
+ros2 topic pub -1 /start_plan cpp_rrt_1/msg/StartPlan "{step_size: 20, visualize_frequency: 50}"
+```
+
+RRT* Example:
+```
+ros2 topic pub -1 /start_plan cpp_rrt_1/msg/StartPlan "{step_size: 20, max_node_limit: 5000, neighbour_radius: 40, stop_on_found: false, visualization_frequency: 50}"
+```
+
 
 #### Parameters
 Name | Type | Defaul Value | Description
