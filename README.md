@@ -1,5 +1,21 @@
 # MLDA 2022 ROS Recruitment Task
 
+- [MLDA 2022 ROS Recruitment Task](#mlda-2022-ros-recruitment-task)
+  * [Introduction](#introduction)
+  * [Getting Started](#getting-started)
+  * [Running nodes](#running-nodes)
+      - [Available Nodes](#available-nodes)
+    + [Run Nodes Sequences](#run-nodes-sequences)
+        * [1. Read Map From File](#1-read-map-from-file)
+      - [2. Read Map Using Map Painter](#2-read-map-using-map-painter)
+  * [Search Parameters](#search-parameters)
+      - [Parameters](#parameters)
+      - [Visualization Key](#visualization-key)
+  * [Map Painter](#map-painter)
+      - [List of keyboard controls](#list-of-keyboard-controls)
+  * [RQT Graph](#rqt-graph)
+      - [Graph For Map Read Node](#graph-for-map-read-node)
+      - [Graph For Map Painter](#graph-for-map-painter)
 
 ## Introduction
 This is an attempt to implement the Rapidly-exploring Random Tree (RRT) algorithm developed by Lavalle et al, a versitile path planning algorithm applicable to high dimensional space. The implementation also includes the RRT* which is another flavor of the RRT. This is a ROS2 implementation, developed and tested on Ubuntu 20.04 running ROS 2 Foxy. The attempt at the task contains
