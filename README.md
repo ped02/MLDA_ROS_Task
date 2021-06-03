@@ -104,7 +104,6 @@ Example:
 ```
 ros2 run cpp_rrt_1 read_image_node ~/Downloads/Maps/map1.png
 ```
-<br/>
 
 #### 2. Read Map Using Map Painter
 `ros2 run py_rrt_1 map_painter`  
@@ -116,7 +115,6 @@ This will load the file onto the map painter.
 Press `s` to send the map into the `map_server_node`  
 
 More information and advanced usage of the **map painter** can be found in another section below.  
-<br/>
 <br/>
 After loading the map into the system, you need to specify the start and goal points by publishing onto the `/start_point` and `/goal_point` topic as `geometry_msgs/msg/Point` message type.
 Example:
