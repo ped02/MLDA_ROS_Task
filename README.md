@@ -174,6 +174,7 @@ Key | Description
 `o` | Open map from file
 `s` | Send map to `/map_image`
 `c` | Save map to disk
+`q` | Quit
 
 The user can be in 4 modes, one for each tool. When user is in each tool, the mouse pointer will change depending on the tool.
 Tool/Mode | Appearance
